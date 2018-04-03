@@ -3,10 +3,16 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import Vuex from 'vuex'
 import materialize from 'materialize-css'
 
+import store from './store/store'
+import 'materialize-css/dist/css/materialize.min.css'
+import 'material-icons/material.css'
+import 'font-awesome/css/font-awesome.min.css'
 
-require('materialize-css/dist/css/materialize.min.css')
+export const bus = new Vue
+Vue.use(Vuex)
 
 Vue.config.productionTip = false
 
@@ -14,6 +20,7 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })

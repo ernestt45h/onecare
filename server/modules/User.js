@@ -64,9 +64,11 @@ route.post('/login', (req, res)=>{
                     var token = jwt.sign({ user: doc } , config.secret)
                     res.json({token: token})
                 }
-                else res.json({
+                else{
+                    res.json({
                         error: "wrong username or password"
                     })
+                }
         })
     }
 })
@@ -82,8 +84,11 @@ function authToken(req, res, next){
 
         //Verifing the token
         jwt.verify(req.token, config.secret, (err, doc)=>{
-            req.user = doc.user
-            next()
+            if (err) res.send({message: err.message})
+            else{
+                req.user = doc.user
+                next()
+            }
         })
     }else {
         res.sendStatus(403)

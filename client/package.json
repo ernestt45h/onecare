@@ -1,6 +1,6 @@
 {
   "name": "onecare",
-  "version": "0.1.0",
+  "version": "0.1.5",
   "description": "a onecare client platform",
   "author": "quasar241 <ernest.hayford@bluebrest.edu.gh>",
   "private": true,
@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "bootstrap": "^4.0.0",
+    "font-awesome": "^4.7.0",
     "materialize-css": "^0.100.2",
     "socket.io-client": "^2.1.0",
     "vue": "^2.5.2",

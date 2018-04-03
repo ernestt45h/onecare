@@ -90,6 +90,11 @@ export default {
     return {
       msg: 'Welcome to Your Vue.js App'
     }
+  },
+  beforeCreate(){
+        if(!this.$store.getters.getToken){
+            this.$router.push('/login')
+        }
   }
 }
 </script>
