@@ -1,8 +1,8 @@
 {
   "name": "onecare",
-  "version": "0.1.5",
-  "description": "a onecare client platform",
-  "author": "quasar241 <ernest.hayford@bluebrest.edu.gh>",
+  "version": "1.0.0",
+  "description": "A Vue.js project",
+  "author": "quenginedev <quenginedev@gmail.com>",
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
@@ -10,14 +10,8 @@
     "build": "node build/build.js"
   },
   "dependencies": {
-    "axios": "^0.18.0",
-    "bootstrap": "^4.0.0",
-    "font-awesome": "^4.7.0",
-    "materialize-css": "^0.100.2",
-    "socket.io-client": "^2.1.0",
+    "firebase": "^4.10.1",
     "vue": "^2.5.2",
-    "vue-router": "^3.0.1",
-    "vuetify": "^1.0.11",
     "vuex": "^3.0.1"
   },
   "devDependencies": {

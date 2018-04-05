@@ -1,6 +1,6 @@
-# oncare
+# onecare
 
-> a onecare client platform
+> A Vue.js project
 
 ## Build Setup
 
