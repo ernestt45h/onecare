@@ -33,11 +33,16 @@ bower_components
 build/Release
 
 # Dependency directories
+<<<<<<< HEAD
 client/node_modules/
 client/jspm_packages/
 server/node_modules/
 server/jspm_packages/
 
+=======
+node_modules/
+jspm_packages/
+>>>>>>> e07ed64f54475419a390040ba65053056ceff2ab
 
 # Typescript v1 declaration files
 typings/
@@ -60,5 +65,8 @@ typings/
 # dotenv environment variables file
 .env
 
+<<<<<<< HEAD
 server/config/email.js
 
+=======
+>>>>>>> e07ed64f54475419a390040ba65053056ceff2ab

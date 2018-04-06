@@ -10,7 +10,7 @@ var config = require('../config/config')
 // Should find a way to authenticate this
 route.get('/',  authToken, (req, res)=>{
     if (req.user.role !== "patient")
-        User.find({},(err, doc)=>{
+        User.findById(req.user._id,(err, doc)=>{
             res.json(req.user)
         })
     else res.sendStatus(403)

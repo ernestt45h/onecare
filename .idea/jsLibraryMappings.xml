@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="JavaScriptLibraryMappings">
-    <file url="file://$PROJECT_DIR$/client" libraries="{onecare/client/node_modules}" />
     <file url="file://$PROJECT_DIR$/server" libraries="{onecare/server/node_modules}" />
-    <file url="PROJECT" libraries="{onecare/client/node_modules, onecare/server/node_modules, vue-resource-DefinitelyTyped, vuex-i18n-DefinitelyTyped}" />
+    <file url="PROJECT" libraries="{onecare/server/node_modules, vue-resource-DefinitelyTyped, vuex-i18n-DefinitelyTyped}" />
     <includedPredefinedLibrary name="Node.js Core" />
     <includedPredefinedLibrary name="WebGL" />
+    <excludedPredefinedLibrary name="onecare/client/node_modules" />
   </component>
 </project>

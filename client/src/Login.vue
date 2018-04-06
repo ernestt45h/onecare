@@ -66,7 +66,7 @@ import { host } from "../config/host";
         methods:{
             loginUser(){
                 this.errormsg = ''
-                let data = {
+                var data = {
                     username: this.username,
                     password: this.password
                 } 

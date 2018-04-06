@@ -1,5 +1,5 @@
 export const host = {
-    name: 'http://api.onecare.com/',
+    name: 'http://localhost/api',
     port: '80',
     logged: 'http://api.onecare.com/user/'
 }

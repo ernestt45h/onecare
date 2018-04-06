@@ -1,5 +1,6 @@
 import Vue from "Vue"
 import Vuex from 'Vuex'
+import axios from 'axios'
 
 import {host} from '../../config/host'
 import App from '../main'
@@ -55,28 +56,13 @@ const store = new Vuex.Store({
     actions:{
         loginUser:({commit,getters}, payload)=>{
             commit('loading',true)
-            console.log(App)
-            App.$http.post(host.name + '/login', payload, { emulateJSON: true }).then(function (data) {
-                commit('loading', false)                        
-                if (data.status == 200) {
-                    data = data.body
-                    if (data.accessKey && data.uid) {
-                        commit('addUser', data)
-                        localStorage.setItem('accessKey', data.accessKey)
-                        localStorage.setItem('userId', data.uid)
-                        this.$router.push('/')
-                    } else {
-                        commit('loading', false)
-                        this.errormsg = data.error
-                    }
-                    //TODO remove
-                    console.log(data)
-                } else {          
-                    this.errormsg = data.body.error
+            axios.post(host.name + '/user/login', payload).then(user=>{
+                user = user.data
+                if(typeof user.error !== undefined){
+                    userBus.$emit('error')
                 }
             })
             console.log(getters.getErrors)
-
         },
         signUpUser({commit}, payload){
             
