@@ -1,3 +1,9 @@
+<<<<<<< HEAD
+=======
+/**
+ * Created by Quasar on 4/2/2018.
+ */
+>>>>>>> deae59ab73849dc3a0c9c85310fcdf045f673f48
 var mongoose = require('mongoose')
 
 var UserSchema = mongoose.Schema({

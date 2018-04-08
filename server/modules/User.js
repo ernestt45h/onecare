@@ -6,8 +6,11 @@ var User = require('../models/UserModel')
 var jwt = require('jsonwebtoken')
 var config = require('../config/config')
 
+<<<<<<< HEAD
 var authToken = require('../middleware/authToken')
 
+=======
+>>>>>>> deae59ab73849dc3a0c9c85310fcdf045f673f48
 // Get All Users
 // Should find a way to authenticate this
 route.get('/',  authToken, (req, res)=>{
@@ -59,7 +62,11 @@ route.post('/login', (req, res)=>{
         User.findOne({$or: [
             {email: body.username, password: body.password},
             {username: body.username, password: body.password}]},
+<<<<<<< HEAD
             "email username first_name last_name _id role",
+=======
+            "role country city gender email username first_name last_name date_of_birth _id",
+>>>>>>> deae59ab73849dc3a0c9c85310fcdf045f673f48
             (err, doc)=>{
                 if (err) res.send(err)
                 else if (doc) {
@@ -75,5 +82,29 @@ route.post('/login', (req, res)=>{
     }
 })
 
+<<<<<<< HEAD
+=======
+function authToken(req, res, next){
+    const bearerHeader = req.header("authorization")
+    //Check if there is token
+    if (typeof bearerHeader !== 'undefined'){
+        //Getting the token
+        const bearer = bearerHeader.split(" ")
+        const bearerToken = bearer[1]
+        req.token = bearerToken
+
+        //Verifing the token
+        jwt.verify(req.token, config.secret, (err, doc)=>{
+            if (err) res.send({message: err.message})
+            else{
+                req.user = doc.user
+                next()
+            }
+        })
+    }else {
+        res.sendStatus(403)
+    }
+}
+>>>>>>> deae59ab73849dc3a0c9c85310fcdf045f673f48
 
 module.exports = route

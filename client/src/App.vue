@@ -42,7 +42,11 @@
     import Loader from './components/Loader.vue'
     import Hospitals from "./components/hospitals";
 
+<<<<<<< HEAD
     import {bus} from './main'
+=======
+    import {userBus} from './main'
+>>>>>>> deae59ab73849dc3a0c9c85310fcdf045f673f48
 
 export default {
   name: 'App',
@@ -84,6 +88,7 @@ export default {
     
   },
   beforeCreate(){
+<<<<<<< HEAD
     // Force a redirect if there isn't an auth token
     if(!this.$store.getters.isToken){
       this.$router.push('/login')
@@ -99,6 +104,29 @@ export default {
   },
   mounted(){
     
+=======
+
+    if (localStorage.getItem('accessKey') && this.$store.getters.user.accessKey == undefined) {
+        this.$store.commit('addUser', {
+            accessKey: localStorage.getItem('accessKey'),
+            userId: localStorage.getItem('userId')  
+        })
+    }
+
+    if (!this.$store.state.user.accessKey) {
+      this.$router.push('/login')
+    }
+      this.$store.dispatch('initUserData')
+  },
+
+  created(){
+    this.authenticate = true;
+    userBus.$on('error', this.error);
+  },
+  mounted(){
+    userBus.$on('userData',()=>{
+        this.userData = this.$store.getters.userData    })
+>>>>>>> deae59ab73849dc3a0c9c85310fcdf045f673f48
   },
   beforeUpdate(){
     this.isloading = true;

@@ -1,9 +1,16 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
+<<<<<<< HEAD
 
 import Router from 'vue-router'
 import Routes from './routes'
+=======
+import Router from 'vue-router'
+import Resource from 'vue-resource'
+import Routes from './routes'
+import Vuetify from 'Vuetify'
+>>>>>>> deae59ab73849dc3a0c9c85310fcdf045f673f48
 
 import Vuex from 'Vuex'
 import Store from './store/store'
@@ -21,6 +28,7 @@ let screenfull = require('../src/assets/js/screenfull')
 import 'font-awesome/css/font-awesome.css'
 import './assets/css/bootstrap-material-design.min.css'
 import '../src/assets/css/style.css'
+<<<<<<< HEAD
 import 'materialize-css/dist/css/materialize.css'
 
 
@@ -28,6 +36,17 @@ Vue.use(Router)
 Vue.use(Vuex)
 
 export const bus = new Vue()
+=======
+
+
+Vue.use(Router)
+Vue.use(Resource)
+Vue.use(Vuex)
+
+export const bus = new Vue()
+export const userBus = new Vue()
+export const crudBus = new Vue()
+>>>>>>> deae59ab73849dc3a0c9c85310fcdf045f673f48
 
 const router = new Router({
     routes: Routes,
@@ -43,10 +62,13 @@ export default new Vue({
   router,
   components: { App },
   template: '<router-view></router-view>',
+<<<<<<< HEAD
   beforeCreate(){
     if(localStorage.getItem('token')){
       this.$store.commit('setToken', localStorage.getItem('token'))
     }
     console.log("I AM AWESOME", localStorage.getItem('token'))
   }
+=======
+>>>>>>> deae59ab73849dc3a0c9c85310fcdf045f673f48
 })

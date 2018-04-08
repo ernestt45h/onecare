@@ -21,7 +21,12 @@
 </template>
 <script>
     import { host } from "../../config/host";
+<<<<<<< HEAD
     
+=======
+    import { userBus } from "../main";
+
+>>>>>>> deae59ab73849dc3a0c9c85310fcdf045f673f48
     export default{
         name: 'home',
         props: ['user'],
@@ -33,6 +38,12 @@
             }        
         },
         mounted(){
+<<<<<<< HEAD
+=======
+            userBus.$on('userData',()=>{
+                this.tabs = this.$store.getters.userData.permissions
+            })
+>>>>>>> deae59ab73849dc3a0c9c85310fcdf045f673f48
         }
     }
 </script>
