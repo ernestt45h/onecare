@@ -2,23 +2,15 @@
   <div id="app" class="dashboard-page">
     <link ref="icon" href="./static/img/logo.af02924.png"> 
     <div>
-      <sidebar :urls="veiwPerms" v-on:logout="logout()"></sidebar>
+      <sidebar :urls="userData.permissions" v-on:logout="logout()"></sidebar>
     <section class="wrapper scrollable">
       <topnav></topnav>
       <div>
-        <div v-if="err">
-          <div class="card bg-warning text-light text-center">
-            <div class="card-header bg-danger ">
-              <h4>{{err.error}}</h4>
-              </div>
-              <div v-if="err.description" class="card-body">
-              <h6 class="bg-warning">{{err.description}}</h6>
-            </div>
-          </div>
-        </div>
-        <div class="main-grid col-12">
+        <error></error>
+        {{userData}}
+        <div v-if="userData" class="main-grid col-12">
           <transition name="fade" mode="out-in">
-            <router-view :user="userData" ></router-view>
+            <router-view></router-view>
           </transition>
         </div>
       </div>
@@ -40,7 +32,9 @@
     import NavBanner from './components/NavBanner.vue'
     import Footer from './components/Footer.vue'
     import Loader from './components/Loader.vue'
-    import Hospitals from "./components/hospitals";
+    import Hospitals from "./components/hospitals"
+    import Error from "./components/errors"
+
 
     import {bus} from './main'
 
@@ -53,17 +47,13 @@ export default {
       NavBanner,
       Footer,
       Loader,
-      Hospitals
+      Hospitals,
+      Error
   },
   data(){
     return{
-        user: '',
-        userData: {},
-        isloading: false,
-        authenticate: false,
-        viewPermissions: [],
-        err: '',
-        loading: this.$store.getters.loading,
+       userData: '',
+       loading: false,
     }
   },
   methods:{
@@ -76,27 +66,28 @@ export default {
     
   },
   beforeCreate(){
-    // Force a redirect if there isn't an auth token
-    if(!this.$store.getters.isToken){
+    // Force a redirect if there isn't an auth user
+    if(!this.$store.getters.isUser){
       this.$router.push('/login')
     }
   },
 
   created(){
-    bus.$on('token', ()=>{
-      if(!this.$store.getters.isToken){
+      if(!this.$store.getters.isUser){
         this.$router.push('/login')
       }
-    })
   },
   mounted(){
+      bus.$on('user', ()=>{
+          if (!this.$store.getters.isUser){
+              this.$router.push('/login')
+          }
+      });
+      bus.$on('userData', ()=>{
+          this.userData = this.$store.getters.getUserData;
+      })
+      this.$store.dispatch('fetchUserData');
 
-  },
-  beforeUpdate(){
-    this.isloading = true;
-  },
-  updated(){
-    this.isloading = false;
   }
 }
 </script>

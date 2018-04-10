@@ -9,7 +9,7 @@ var authToken = require('../middleware/authToken')
 // Get All Permissions
 // Should find a way to authenticate this
 route.get('/',  authToken, (req, res)=>{
-        Permission.find({role: req.user.role},'role target action description',(err, doc)=>{
+        Permission.find({role: req.user.role},(err, doc)=>{
             if(err){
                 throw err
             }else{

@@ -51,8 +51,6 @@
                 </div>
             </div>
     </div>
-
-    </div>
 </template>
 <script>
 import {host} from "../../config/host";

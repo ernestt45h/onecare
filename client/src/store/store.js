@@ -5,105 +5,132 @@ import axios from 'axios'
 import {host} from '../../config/host'
 import {bus} from '../main'
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 const store = new Vuex.Store({
     state:{
-        token: '',
+        user: {
+            uid: localStorage.getItem('uid') || '',
+            token: localStorage.getItem('token') || ''
+        },
         userData:{},
         error: {},
         loading:false,
         reports:[]
     },
     getters:{
-        isToken(state){
-            if(state.token !== '') {
-                return true
-            }else {
-                return false
-            }
+        isUser(state){
+            return state.user !== '';
         },
-        user(state){
+
+        getUser:(state)=>{
             return state.user
         },
-        errors(state){
-            return state.error
-        },
-        loading(state){
-            return state.loading
-        },
-        userData:(state)=>{
+
+        getUserData:(state)=>{
             return state.userData
         }
     },
     mutations:{
 
-        setToken: (state, payload)=>{
-            state.token = payload
-            bus.$emit('token')
+        setUser: (state, payload)=>{
+            state.user = payload;
+            bus.$emit('user')
         },
+
         addUser(state, payload){
-            state.user = payload
-            state.isUser
+            state.user = payload;
         },
+
         logoutUser(state){
-            state.user = {}
+            state.user = {};
             state.userData ={}
         },
+
         updateUser(state,payload){
             if (state.userData) {
                 state.userData = {}
             }
             state.userData += payload
         },
+
         loading(state,payload){
             state.loading = payload
         },
-        updateUserData(state,payload){
-            state.userData = payload
+
+        setUserData(state,payload){
+            state.userData = payload;
+            bus.$emit('userData')
         }
     },
     actions:{
-        loginUser:({commit,getters}, payload)=>{
-
-            bus.$emit('error', '')
-            commit('loading',true)
+        loginUser:({commit}, payload)=>{
+            bus.$emit('error', '');
+            commit('loading',true);
             axios.post(host.name + '/user/login', payload).then(e=>{
-                var user = e.data
+                const user = e.data;
                 if(user.error !== undefined){
                     bus.$emit('error', {
                         msg: 'Wrong Username or Password'
                     })
                 }else{
-                    commit('setToken', user.token)
-                    localStorage.setItem('token', user.token)
-                    bus.$emit('token')
+                    commit('setUser', user);
+                    localStorage.setItem("uid", user.uid);
+                    localStorage.setItem("token", user.token);
                 }
-                console.log('data', user)
+            commit('loading',false)                
+            }).catch(()=>{
+                bus.$emit('error', { msg: 'Error Connecting To Server'});
+            commit('loading',false)                
             })
         },
+
         signUpUser({commit}, payload){
             
         },
-        initUserData:({commit, getters})=>{
 
+        initUserData:({commit, getters})=>{
             let user = getters.user;
-            console.log(user);
-            App.$http.get(host.logged + user.accessKey).then(function (params) {
+            console.log("user inserted");
+            axios.get(host.name + '/user').then(function (params) {
               if (params.status === 200) {
-                commit('updateUserData',params.body)
+                commit('updateUserData',params.body);
                 bus.$emit('userData')
               }
             })
+        },
 
+        fetchUserData: ({commit, getters})=>{
+            const user = getters.getUser;
+            axios.get(host.name + '/user/' + user.uid, {
+                headers:{
+                    Authorization: 'Bearer ' + user.token,
+                }
+            }).then(req=>{
+                if(req.data.error){
+                    bus.$emit('error', {
+                        msg: "User Account Error"
+                    });
+                    console.log("error fetched User")
+                }else if(req.data.message){
+                    bus.$emit('error', {
+                        msg: "User Account Error. Please log out and login again"
+                    });
+                }else{
+                    commit('setUserData',req.data)
+                }
+            }).catch(err=>{
+                console.log(err)
+            })
         },
 
         logout:({commit})=>{
-            commit('setToken', null)
-            localStorage.removeItem('token')
-            bus.$emit('token')
+            commit('setUser', '');
+            localStorage.removeItem('uid');
+            localStorage.removeItem('token');
+            bus.$emit('user')
         }
     }
-})
+});
 
 export default {store}

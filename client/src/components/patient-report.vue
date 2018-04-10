@@ -18,8 +18,6 @@
 <script>
     import  Crud  from "./crud";
     import {host} from '../../config/host'
-    import {userBus} from '../main'
-    import {crudBus} from '../main'
 
     export default {
         name: 'report',
@@ -55,9 +53,7 @@
                     })
         },
         mounted(){
-          crudBus.$on('crudClicked', (payload)=>{
-            this.$router.push('/report/'+payload.action+'/'+payload.id)
-          })
+
         }
     }
 </script>

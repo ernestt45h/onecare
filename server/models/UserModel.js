@@ -1,10 +1,6 @@
-<<<<<<< HEAD
-=======
-/**
- * Created by Quasar on 4/2/2018.
- */
->>>>>>> deae59ab73849dc3a0c9c85310fcdf045f673f48
+
 var mongoose = require('mongoose')
+var permissions = require('./PermissionModel')
 
 var UserSchema = mongoose.Schema({
     email: {
@@ -31,12 +27,10 @@ var UserSchema = mongoose.Schema({
     country: {
         type: String,
         lowercase: true,
-        default: 'unknown'
     },
     city: {
         type: String,
         lowercase: true,
-        default: 'unknown'
     },
     first_name:{
         type: String,

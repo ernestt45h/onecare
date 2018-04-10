@@ -87,14 +87,7 @@
                 this.showMenu = !this.showMenu                
             },
             logout(){
-<<<<<<< HEAD
                 this.$store.dispatch('logout')
-                bus.$on('token', ()=>{
-                    this.$router.push('/login')
-                })
-=======
-                this.$emit('logout', 'user loged out');
->>>>>>> deae59ab73849dc3a0c9c85310fcdf045f673f48
             }
         },
         mounted(){

@@ -27,7 +27,6 @@
 </template>
 <script>
 
-import {crudBus} from '../main'
 
 export default {
   name:'crudeTable',
@@ -53,10 +52,6 @@ export default {
       return 'Hello'
     },
     actionPressed(action, row){
-      crudBus.$emit('crudClicked',{
-        action: action,
-        id: row.id
-      })
       console.log('done')
     }
   },
