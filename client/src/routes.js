@@ -10,6 +10,7 @@ import Profile from './components/Profile.vue'
 import PatientReport from './components/patient-report.vue'
 import Appointments from './components/appointments.vue'
 import Hospitals from './components/hospitals.vue'
+import Settings from './components/Settings.vue'
 
 export default [
 
@@ -18,12 +19,14 @@ export default [
         component: App,
         children:[
             {path:'/', component: Home, name:'home'},
-            {path:'doctors', component: Doctors, name:'doctors'},
+            {path:'doctor', component: Doctors, name:'doctors'},
             {path:'profile', component: Profile, name:'profile'},
             {path: 'report/:action/:id',component: PatientReport, name: 'patient-report'},
-            {path: 'report', component: PatientReport, name: 'patient-reports' },
-            {path:'hospitals', component: Hospitals, name:'hospitals'},
-            {path:'appointments', component:Appointments, name:'appointments'}
+            {path: 'patient', component: PatientReport, name: 'patient-reports' },
+            {path:'hospital', component: Hospitals, name:'hospitals'},
+            {path:'appointment', component:Appointments, name:'appointments'},
+            {path:'settings', component:Settings, name:'settings'}
+
         ]
     },
     {

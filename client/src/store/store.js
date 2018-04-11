@@ -20,7 +20,7 @@ const store = new Vuex.Store({
     },
     getters:{
         isUser(state){
-            return state.user !== '';
+            return (state.user.uid !== "" ) && (state.user.token !== "" );
         },
 
         getUser:(state)=>{
@@ -66,7 +66,7 @@ const store = new Vuex.Store({
     actions:{
         loginUser:({commit}, payload)=>{
             bus.$emit('error', '');
-            commit('loading',true);
+            bus.$emit('loading',true);
             axios.post(host.name + '/user/login', payload).then(e=>{
                 const user = e.data;
                 if(user.error !== undefined){
@@ -78,10 +78,10 @@ const store = new Vuex.Store({
                     localStorage.setItem("uid", user.uid);
                     localStorage.setItem("token", user.token);
                 }
-            commit('loading',false)                
+                bus.$emit('loading',false)
             }).catch(()=>{
                 bus.$emit('error', { msg: 'Error Connecting To Server'});
-            commit('loading',false)                
+                bus.$emit('loading',false)
             })
         },
 
@@ -102,6 +102,7 @@ const store = new Vuex.Store({
 
         fetchUserData: ({commit, getters})=>{
             const user = getters.getUser;
+            bus.$emit('loading',true);
             axios.get(host.name + '/user/' + user.uid, {
                 headers:{
                     Authorization: 'Bearer ' + user.token,
@@ -119,13 +120,19 @@ const store = new Vuex.Store({
                 }else{
                     commit('setUserData',req.data)
                 }
+                bus.$emit('loading',false);
             }).catch(err=>{
                 console.log(err)
+                bus.$emit('loading',false);
             })
         },
 
         logout:({commit})=>{
-            commit('setUser', '');
+            commit('setUser', {
+                uid: "",
+                token: ""
+            });
+            commit('setUserData', '')
             localStorage.removeItem('uid');
             localStorage.removeItem('token');
             bus.$emit('user')

@@ -1,17 +1,60 @@
 <template>
-    <div class="loader" :class="{loading: isloading}" id="loader"></div>
+    <div v-if="isLoading" class="container session-timeout">
+        <div class="text-center">
+            <div class="loader"></div>
+        </div>
+    </div>
 </template>
 <script>
+
+    import {bus} from '../main'
     export default{
         name:'loader',
-        props: [ 'isloading' ]
+        data(){
+            return {
+                isLoading: false
+            }
+        },
+        created(){
+            bus.$on('loading', (bool)=>{
+                this.isLoading = bool
+            })
+        }
     }
 </script>
 <style scoped>
+
     .loader{
-        position: relative;
-        width: 100px;
-        height: 100px;
-        background: rgb(116, 233, 62);
+        display: block;
+        background: #ad0;
+        border: 5px solid #fff;
+        width: 50px;
+        height: 50px;
+        position: absolute;
+        right: 25px;
+        bottom: 25px;
+        border-radius: 100%;
+        animation-name: loader;
+        animation-duration: 1s;
+        animation-iteration-count: infinite
+    }
+
+    @keyframes loader {
+        0%{
+            border-width: 5px;
+            width: 50px;
+            height: 50px;
+        }
+
+        50%{
+            width: 25px;
+            height: 25px;
+        }
+
+        100%{
+            border-width: 5px;
+            width: 50px;
+            height: 50px;
+        }
     }
 </style>

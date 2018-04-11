@@ -33,8 +33,8 @@
         },
         created(){
                 let user = this.$store.getters.user
-                console.log(host.logged+user.accessKey+'/reports')
-                this.$http.get(host.logged+user.accessKey+'/reports')
+                console.log(host.logged+'/reports')
+                this.$http.get(host.logged+'/reports')
                   .then(data => {
                     if (data.status == 200) {
                       data = data.body

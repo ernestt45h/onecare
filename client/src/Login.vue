@@ -1,6 +1,7 @@
 <template>
     <div id="login" class="agile-signup">
         <error></error>
+        <loader></loader>
         <div class="content2">
             <div class="grids-heading gallery-heading signup-heading">
                 <img id="logo-icon"  src="./assets/img/logo.png"/>

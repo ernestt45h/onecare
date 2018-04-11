@@ -32,7 +32,7 @@ route.get('/:id',  authToken, (req, res)=>{
                 Permission.find({
                     role: req.user.role
                 },
-                'permissions target description'
+                'permissions target description icon'
                 ,(err, perm)=>{
                     if (err) res.status(500).send({
                         error: 'error retriving user information... please contact system admin'

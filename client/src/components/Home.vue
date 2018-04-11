@@ -1,23 +1,25 @@
 <template>
-    <div v-if="tabs">
-        <div class="grid-info row">
-            <router-link v-for="(tab, index) in tabs" :key="index"  :to="tab.navigation" v-if="tab.action == 'view'" class="col-sm-6 col-md-4 col-lg-3">
-                <div class="top-comment-grid">
-                    <div :class="'comments '+ colorPallet[Math.floor(Math.random()*colorPallet.length)]">
-                        <div class="comments-icon">
-                            <i :class="'fa ' + tab.icon"></i>
+    <keep-alive>
+        <div v-if="tabs">
+            <div class="grid-info row">
+                <router-link v-for="(tab, index) in tabs" :key="index"  :to="'/'+tab.target" v-if="isView(tab.permissions)" class="col-sm-6 col-md-4 col-lg-3">
+                    <div class="top-comment-grid">
+                        <div class="comments" :class="colorPallet[Math.floor(Math.random()*colorPallet.length)]">
+                            <div class="comments-icon">
+                                <i :class="'fa ' + tab.icon"></i>
+                            </div>
+                            <div class="comments-info sub-info">
+                                <h3><i class="fa fa-eye"></i></h3>
+                                <a href="#" class="text-capitalize">{{ tab.description }}</a>
+                            </div>
+                            <div class="clearfix"> </div>
                         </div>
-                        <div class="comments-info sub-info">
-                            <h3><i class="fa fa-eye"></i></h3>
-                            <a href="#" class="text-capitalize">{{ tab.target }}</a>
-                        </div>
-                        <div class="clearfix"> </div>
                     </div>
-                </div>
-            </router-link>
-            <div class="clearfix"> </div>
+                </router-link>
+                <div class="clearfix"> </div>
+            </div>
         </div>
-    </div>
+    </keep-alive>
 </template>
 <script>
     import { host } from "../../config/host";
@@ -29,11 +31,20 @@
             return{
                 colorPallet:['aqua', 'blue', 'green', 'orange'],
                 ranNum: 10,
-                tabs: this.$store.getters.userData.permissions
+                tabs: this.$store.getters.getUserData.permissions
             }        
         },
+        methods: {
+            isView:(perms)=>{
+                for (var i = 0; i < perms.length; i++){
+                    if (perms[i].action === "view"){
+                        return true
+                    }
+                }
+            }
+        },
         mounted(){
-
+            console.log(this.tabs)
         }
     }
 </script>
