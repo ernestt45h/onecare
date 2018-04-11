@@ -1,15 +1,19 @@
 var api = require('express').Router()
 var user = require('./User')
 var permission = require('./Permission')
+var appointment = require('./Appointment')
 
-/**
- * Created by Quasar on 4/1/2018.
- */
-//User Module
+
+//Appointments Module
+api.use('/appointment', appointment)
+
+ //Users Module
 api.use('/user', user)
 
-//Permission Module
+//Permissions Module
 api.use('/permission', permission)
+
+
 
 // Modules used for routing goes here
 api.all('/:as', (req, res)=>{
