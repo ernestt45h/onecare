@@ -2,16 +2,21 @@ var route = require('express').Router()
 var config = require('../config/config')
 var authToken = require('../middleware/authToken')
 const Appointment = require('../models/AppointmentsModule')
-const Permission = 
+const Permission =
 
 route.get('/', authToken, (req, res)=>{
+    let date = new Date();
+    console.log(date)
     switch(req.user.role){
         case "patient":
-                Appointment.find({ patient: req.user.role },(err, doc)=>{
+                Appointment
+                    .where('status', 'active')
+                    .where('date.start')
+                    .find({ "patient._id" : req.user._id },(err, doc)=>{
                     res.json(doc)
                 })
                 break
-        case "super_admin": 
+        case "super_admin":
             Appointment.find((err, doc)=>{
                 res.json(doc)
             })
@@ -27,6 +32,14 @@ route.post('/', authToken, (req, res)=>{
         }else{
             res.json(doc)
         }
+    })
+})
+
+route.delete('/:id', authToken, (req, res)=>{
+    Appointment.findByIdAndUpdate(req.params.id, {
+        status: 'canceled'
+    }, (err, doc)=>{
+        res.json(doc)
     })
 })
 

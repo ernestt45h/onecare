@@ -1,19 +1,63 @@
-var mongoose = require('mongoose')
-var Hospital = require('./HospitalModel')
-var User = require('./UserModel')
+const mongoose = require('mongoose');
+const GeoSchema = require('./GeoLocationModel')
+const Schema = mongoose.Schema;
+const ObjectId = Schema.Types.ObjectId;
 
-var Schema = mongoose.Schema
-
-var ObjectId = Schema.Types.ObjectId
-
-var AppointmentSchema = Schema({
+const AppointmentSchema = Schema({
     patient: {
-        type: Schema.ObjectId,
-        ref: 'user'
+        _id: ObjectId,
+        name: {
+            first: {
+                required:
+                    [
+                        true, "first name required"
+                    ],
+                type: String,
+            },
+            last: {
+                required:
+                    [
+                        true, "first name required"
+                    ],
+                type: String,
+            },
+            other: {
+                type: String
+            }
+        }
     },
     hospital: {
-        type: Schema.ObjectId,
-        ref: 'hospital'
+        name: {
+            type: String,
+            required:
+                [
+                    true, "hospital name required"
+                ],
+        },
+        contact:{
+            phone:
+                {
+                    type: String,
+                    required:
+                        [
+                            true, "hospital phone number required"
+                        ],
+                    unique: true
+                },
+            email:
+                {
+                    type: String,
+                }
+        },
+        location: {
+            address: {
+                type: String,
+                required: true
+            },
+            geo:{
+                type: GeoSchema
+            }
+        }
     },
     date: {
         start: {
@@ -25,14 +69,39 @@ var AppointmentSchema = Schema({
         }
     },
     doctor: {
-        type: Schema.ObjectId,
-        ref: 'user'
+        _id: ObjectId,
+        name: {
+            first: {
+                required:
+                    [
+                        true, "first name required"
+                    ],
+                type: String,
+            },
+            last: {
+                required:
+                    [
+                        true, "first name required"
+                    ],
+                type: String,
+            },
+            other: {
+                type: String
+            }
+        },
     },
     description: {
         type: String,
-        required: true
+        required:
+            [
+                true, "appointment description required"
+            ]
+    },
+    status: {
+        type: String,
+        enum: ['active', 'expired', 'canceled'],
+        default: 'active'
     }
-
-})
+});
 
 module.exports = mongoose.model('appointments', AppointmentSchema)

@@ -12,11 +12,25 @@ const authToken = require('../middleware/authToken');
 // Get All Users
 // Should find a way to authenticate this
 route.get('/',  authToken, (req, res)=>{
-    if (req.user.role !== "patient")
-        User.findById(req.user._id,(err, doc)=>{
-            res.json(req.user)
-        });
-    else res.sendStatus(403)
+    switch(req.user.role){
+        case 'patient': res.sendStatus(403)
+            break
+        case 'super_admin' : 
+            User.find((err, doc)=>{
+                res.json(req.user)
+            })
+            break
+        case 'admin' :
+            User.where('hospital', req.user.hospital)
+            .nor([{role: 'super_admin'}])
+            .exec((err, doc)=>{
+                res.json(doc)
+        })
+            break
+        default : res.json(403)
+            
+    }
+    
 });
 
 //Get user by id
@@ -61,9 +75,11 @@ route.post('/', (req, res)=>{
         city: body.city,
         gender: body.gender,
         status: 'inactive',
-        first_name: body.first_name,
-        last_name: body.last_name,
-        other_name: body.other_names,
+        name: {
+            first: body.name.first,
+            last: body.name.last,
+            other: body.name.other,
+        },
         date_of_birth: body.date_of_birth
     });
     user.save((err, doc)=>{

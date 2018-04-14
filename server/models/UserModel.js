@@ -32,20 +32,24 @@ var UserSchema = mongoose.Schema({
         type: String,
         lowercase: true,
     },
-    first_name:{
+    name: {
+        first: {
         type: String,
         lowercase: true,
         required: true
+        },
+        last:{
+            type: String,
+            lowercase: true,
+            required: true
+        },
+        other:{
+            type: String,
+            lowercase: true,
+        },
     },
-    last_name:{
-        type: String,
-        lowercase: true,
-        required: true
-    },
-    other_names:{
-        type: String,
-        lowercase: true,
-    },
+
+
     date_of_birth: {
         type : Date,
         default: undefined
@@ -60,14 +64,17 @@ var UserSchema = mongoose.Schema({
         enum: ['inactive', 'active', 'blocked'],
         default: 'inactive',
     },
-    date_created: {
-        type: Date,
-        default: Date.now
+    date:{
+        created: {
+            type: Date,
+            default: Date.now
+        },
+        modified: {
+            type: Date,
+            default: Date.now
+        }
     },
-    date_modified: {
-        type: Date,
-        default: Date.now
-    }
+
 })
 
 UserSchema.methods.fullName = ()=>{
