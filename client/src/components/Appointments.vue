@@ -1,107 +1,145 @@
 <template>
     <div>
         <div class="row">
-        <div id="up-comming" class="col-sm-12 col-xl-8 col-lg-5">
-            <form class="form-group" action="#">
-                <div class="row ">
-                <input class="form-control col-10 col-md-11" placeholder="Search For Appointments" type="text"/>
-                <button class="form-control btn btn-info col-2 col-md-1"><i class="fa fa-search"></i></button>
-                </div>
-            </form>
-            <div class="card">
-                <div class="card-header bg-green">
-                    <h1 class="text-light">Appointments</h1>
-                </div>
-                <div class="card-body">
-                    <ul class="list-group list-group-flush">
-                        <div data-toggle="modal" v-if="e.doctor" data-target="#exampleModal"  @click="viewAppointment(e)" class="list-group-item" v-for="e in events" :key="e.id">
-                            <h4 class="col-sm-6"> {{ e.description }}</h4>
-                            <br>
-                            <h6 class="col-sm-6">With Dr. {{ e.doctor }} on {{ e.date }}</h6>
-                        </div>
-                        <div v-else>
-                            <h3 class="text-info text-center">You currnetly have no appointments</h3>
-                        </div>
-                    </ul>
-                </div>
-                <div class="card-footer">
-                    <h6 class="pull-right"><button class="btn btn-success"><i class="fa fa-plus"></i></button></h6>
+            <calendar class="calendar col-sm-12 col-md-6 col-xl-4 col-lg-6 " :events="events"></calendar>
+            <div id="up-comming" class="col-sm-12 col-md-6 col-xl-8 col-lg-6">
+                <div class="card">
+                    <div class="card-header bg-info">
+                        <h1 class="text-light">Appointments</h1>
+                    </div>
+                    <div>
+                        <ul class="list-group">
+                            <div
+                                v-if="events"
+                                v-for="e in events"
+                                class="list-group-item"
+                                :key="e._id">
+
+                                    <h4 class="col-sm-6"> {{ e.description | uppercase}}</h4>
+                                    <br>
+                                    <h6 class="col-sm-6">With Dr.
+                                        {{
+                                        e.doctor.name.first + ' ' +
+                                        e.doctor.name.last
+                                        | uppercase }}
+                                        at {{ e.hospital.name }}
+                                        on {{ e.date.start | simpleDate}}
+                                    </h6>
+                                    <button
+                                            @click="showAlert(e)"
+                                            class="btn align btn-danger btn-sm"
+                                            data-toggle="modal"
+                                            data-target="#cancelAppointment">
+                                                <i class="fa fa-times"></i> cancel appointment
+                                    </button>
+                            </div>
+                            <div v-else>
+                                <h3 class="text-info text-center">You currnetly have no appointments</h3>
+                            </div>
+                        </ul>
+                    </div>
+                    <div class="card-footer">
+                        <h6 class="pull-right"><button class="btn btn-success"><i class="fa fa-plus"></i></button></h6>
+                    </div>
                 </div>
             </div>
         </div>
-        <calendar class="calendar col-sm-12 col-xl-4 col-lg-5" :events="events"></calendar>
-    </div>
-         <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                    <div class="modal-header bg-info">
-                        <h4 class="modal-title" id="exampleModalLabel">Details</h4>
+        <!-- Cancel Appointment modal -->
+        <div class="modal fade" id="cancelAppointment" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header bg-danger">
+                        <h4 class="modal-title" id="exampleModalLabel">Are you sure you want to delete this appointment ?</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+                            <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div v-html="desc.render()" class="modal-body">
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger">Cancel Appointment</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </div>
-                    </div>
+                    <app-modal :appointment="cancelingAppointment" @confirmed="cancelAppointment($event)"  class="modal-body"></app-modal>
                 </div>
             </div>
+        </div>
     </div>
 </template>
 <script>
-import {host} from "../../config/host";
-import Calendar from "./calendar.vue";
+    import {host} from "../../config/host";
+    import Calendar from "./calendar.vue";
+    import AppModal from "./includes/AppointmentModal.vue"
+    import axios from "axios"
+    import {bus} from "../main"
 
-export default {
-    name:'appointments',
-    components:{Calendar},
-    props:['user'],
-    data(){
-        return{
-            events:[],
-            desc:{
-                raw: {},
-                render: ()=>{
-                    return   `
-                    <h3>Meeting Dr. ${ this.desc.raw.doctor } at ${ this.desc.raw.hospital}</h3>
-                    <br>
-                    <h5>on <b>${ 
-                        new Date(this.desc.raw.date).getDate()
-                        + '<sup>th </sup>' 
-                        +  (new Date(this.desc.raw.date).getMonth() + 1) + ' ' 
-                        + new Date(this.desc.raw.date).getFullYear()} </b> 
-                        from ( ${ this.desc.raw.start } to  ${ this.desc.raw.end } )</h5>
-                    <h5>for your  ${ this.desc.raw.description }</h5>  
-                    `
+    export default {
+        name: 'appointments',
+        components:{Calendar, AppModal},
+        data(){
+            return{
+                events:[],
+                cancelingAppointment: {
+                    doctor: {
+                        name: {
+                            first: '',
+                            last: '',
+                            other: '',
+                        }
+                    },
+                    hospital: {
+                        name: ''
+                    },
+                    description: '',
+                    date: {
+                        start: ''
+                    }
                 },
-            },
-        }
-    },
-    methods:{
-        viewAppointment(event){
-            this.desc.raw = event
-        }
-    },
-    computed:{
-        searched(){
-            console.log(this.searchApp)
-        }
-    },
-    created(){
-        let uak = this.$store.getters.user
-        console.log(uak.accessKey)
-        this.$http.get(host.logged+uak.accessKey+'/appointments')
-        .then(e => {
-            console.log(e)            
-            this.events = e.body
-        })
-    }
+                token: this.$store.getters.getUser.token
+            }
+        },
+        methods:{
+            showAlert(e){
+                console.log(e)
+                this.cancelingAppointment = e
 
-}
+            },
+            viewAppointment(event){
+                this.desc.raw = event
+                console.log(this.desc.raw.doctor.name.first)
+            },
+            cancelAppointment(id){
+                bus.$emit('loading', true)
+                axios.delete(host.name + '/appointment/' + id, {
+                    headers: {
+                        Authorization: 'bearer ' + this.token
+                    }
+                })
+                    .then(()=>{
+                        for (var i = 0; i < this.events.length; i++){
+                            if(this.events[i]._id === id){
+                                this.events.splice(i)
+                            }
+                        }
+                        bus.$emit('loading', false)
+                    })
+            },
+
+        },
+        computed:{
+            searched(){
+                console.log(this.searchApp)
+            }
+        },
+        created(){
+            bus.$emit('loading', true)
+            axios.get( host.name+'/appointment', {
+                headers: {
+                    Authorization: 'Bearer '+ this.token
+                }
+            })
+                .then( e => {
+                    console.log(e.data);
+                    this.events = e.data
+                    bus.$emit('loading', false)
+                })
+        }
+
+    }
 </script>
 <style scoped>
 
@@ -113,13 +151,13 @@ export default {
         margin-bottom: 20px;
         font-size: 20px;
     }
-    
+
     .card{
-        margin: 0 5px; 
+        margin: 0 5px;
     }
-    
+
     .card:hover{
-        cursor: pointer;
+        cursor: default;
     }
 
     .bg-green{

@@ -11,7 +11,7 @@ route.get('/', authToken, (req, res)=>{
         case "patient":
                 Appointment
                     .where('status', 'active')
-                    .where('date.start')
+                    .where('date.start').gt(new Date().toLocaleString())
                     .find({ "patient._id" : req.user._id },(err, doc)=>{
                     res.json(doc)
                 })

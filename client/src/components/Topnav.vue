@@ -6,9 +6,14 @@
             </div>
             <div class="w3l_search">
                 <form action="." method="get">
-                    <input type="text" name="search" placeholder="Search" required="">
-                    <button class="btn btn-default" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
-                </form>
+                    <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Search" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                        <button class="btn btn-raised btn-success" type="button">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                    </div></form>
             </div>
 
             <div class="header-right">

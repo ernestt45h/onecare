@@ -9,7 +9,7 @@
                                 <i :class="'fa ' + tab.icon"></i>
                             </div>
                             <div class="comments-info sub-info">
-                                <h3><i class="fa fa-eye"></i></h3>
+                                <h3><i :class="'fa ' + tab.icon"></i></h3>
                                 <a href="#" class="text-capitalize">{{ tab.description }}</a>
                             </div>
                             <div class="clearfix"> </div>
@@ -43,9 +43,6 @@
                 }
             }
         },
-        mounted(){
-            console.log(this.tabs)
-        }
     }
 </script>
 <style>

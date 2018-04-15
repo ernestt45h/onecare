@@ -123,6 +123,10 @@ const store = new Vuex.Store({
                 bus.$emit('loading',false);
             }).catch(err=>{
                 console.log(err)
+                bus.$emit('error', {
+                    msg: 'the was an error retriving your data.',
+                    sub: 'try logging out and login again'
+                })
                 bus.$emit('loading',false);
             })
         },

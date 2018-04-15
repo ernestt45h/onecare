@@ -24,13 +24,19 @@ var UserSchema = mongoose.Schema({
         enum: ['patient', 'super_admin', 'admin', 'doctor', 'nurse', 'pharmacist', 'laboratorist', 'accountant'],
         default: 'patient'
     },
-    country: {
-        type: String,
-        lowercase: true,
-    },
-    city: {
-        type: String,
-        lowercase: true,
+    location: {
+        country: {
+            type: String,
+            lowercase: true,
+        },
+        city: {
+            type: String,
+            lowercase: true,
+        },
+        address: {
+            type: String,
+            lowercase: true
+        }
     },
     name: {
         first: {
@@ -49,6 +55,10 @@ var UserSchema = mongoose.Schema({
         },
     },
 
+    hospital:{
+        _id : mongoose.Schema.Types.ObjectId,
+        name: String
+    },
 
     date_of_birth: {
         type : Date,

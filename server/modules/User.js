@@ -13,7 +13,8 @@ const authToken = require('../middleware/authToken');
 // Should find a way to authenticate this
 route.get('/',  authToken, (req, res)=>{
     switch(req.user.role){
-        case 'patient': res.sendStatus(403)
+        case 'patient':
+            res.json(req.user)
             break
         case 'super_admin' : 
             User.find((err, doc)=>{
@@ -37,7 +38,7 @@ route.get('/',  authToken, (req, res)=>{
 route.get('/:id',  authToken, (req, res)=>{
     // Get any user info if not patient 
     if(req.params.id === req.user._id)
-        User.findById(req.user._id, 'country city gender email username first_name last_name', (err, user)=>{
+        User.findById(req.user._id, 'country city gender email username name location hospital', (err, user)=>{
             if(err)
                 res.status(500).send({
                     error: 'error retriving user information... please contact system admin'
@@ -97,7 +98,7 @@ route.post('/login', (req, res)=>{
         User.findOne({$or: [
             {email: body.username, password: body.password},
             {username: body.username, password: body.password}]},
-            "email username first_name last_name _id role",
+            "email username name location hospital date_of_birth _id role",
             (err, doc)=>{
                 if (err) res.send(err);
                 else if (doc) {

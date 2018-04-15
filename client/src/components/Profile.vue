@@ -13,34 +13,34 @@
                                         <div class="col-md-5">
                                             <div class="form-group">
                                                 <label>Hospital Registered At (disabled)</label>
-                                                <input type="text" class="form-control" disabled :placeholder="hospital" value="Kolebu Poly Clinic">
+                                                <input type="text" class="form-control" disabled >
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>Username (disabled)</label>
-                                                <input type="text" class="form-control" disabled :placeholder="username">
+                                                <input type="text" class="form-control" disabled placeholder="username">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="exampleInputEmail1">Email address (disabled)</label>
-                                                <input type="email" class="form-control" disabled :placeholder="email">
+                                                <input type="email" class="form-control" disabled placeholder="email">
                                             </div>
                                         </div>
                                     </div>
-                                    <template v-if="!othernames">
+                                    <template v-if="true">
                                         <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>First Name</label>
-                                                <input type="text" v-model="temp_firstname" class="form-control" :placeholder="user.firstname">
+                                                <input type="text" class="form-control" placeholder="firstname">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Last Name</label>
-                                                <input type="text" v-model="temp_lastname" class="form-control" :placeholder="lastname">
+                                                <input type="text" class="form-control" placeholder="lastname">
                                             </div>
                                         </div>
                                     </div>
@@ -50,19 +50,19 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Last Name</label>
-                                                <input type="text" v-model="temp_lastname" class="form-control" :placeholder="lastname">
+                                                <input type="text" class="form-control" placeholder="lastname">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>First Name</label>
-                                                <input type="text" v-model="temp_firstname" class="form-control" :placeholder="firstname">
+                                                <input type="text" class="form-control" placeholder="firstname">
                                             </div>
                                         </div>
                                          <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Other Names</label>
-                                                <input type="text" class="form-control" :placeholder="othernames">
+                                                <input type="text" class="form-control" placeholder="othernames">
                                             </div>
                                         </div>
                                     </div>
@@ -72,7 +72,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Address</label>
-                                                <input type="text" class="form-control" :placeholder="address">
+                                                <input type="text" class="form-control" placeholder="address">
                                             </div>
                                         </div>
                                     </div>
@@ -81,19 +81,19 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>City</label>
-                                                <input type="text" class="form-control" :placeholder="city">
+                                                <input type="text" class="form-control" placeholder="city">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Country</label>
-                                                <input type="text" class="form-control" :placeholder="country">
+                                                <input type="text" class="form-control" placeholder="country">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Contact number</label>
-                                                <input type="text" class="form-control" :placeholder="contact">
+                                                <input type="text" class="form-control" placeholder="contact">
                                             </div>
                                         </div>
                                     </div>
@@ -130,8 +130,8 @@
                                 </div>
                                 <p class="description text-center">
                                     <br>
-                                    <i class="fa fa-envelope"></i> : {{email}} 
-                                    <i class="fa fa-phone"></i> : {{contact}}
+                                    <i class="fa fa-envelope"></i> : email
+                                    <i class="fa fa-phone"></i> : phone
                                 </p>
                             </div>
                             <hr>
@@ -152,12 +152,11 @@
                     </div>
                     <div class="modal-body">
                         <h3 class="text-info">Provide password to apply changes</h3>
-                        <input type="password" v-model="password" class="form-control" autofocus>
+                        <input type="password" class="form-control" autofocus>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button type="button" class="btn btn-warning" data-dismiss="modal">Update</button>
-
                     </div>
                     </div>
                 </div>
@@ -167,53 +166,21 @@
 
 <script>
 import { host } from "../../config/host";
+import {bus} from '../main'
+import axios from 'axios'
+
 
 export default {
   name: 'profile',
-  props:['user'],
   data(){
       return{
-        hospital: 'Unkown',
-        username: '',
-        email: '',
-        firstname: '',
-        lastname: '',
-        othernames: '',
-        address: '',
-        city: '',
-        country: '',
-        contact: '',
-        password:'',
 
-        temp_hospital: null,
-        temp_username: null,
-        temp_email: null,
-        temp_firstname: null,
-        temp_lastname: null,
-        temp_address: null,
-        temp_city: null,
-        temp_country: null,
-        temp_contact: null,
 
       }
   },
-  mounted(){
-        const user = this.$store.getters.retriveUser
-        const req = this.$http.get(host.logged+user.accessKey).then( e => {
-            e = e.body
-            this.hospital = e.hospital
-            this.username = e.username
-            this.email = e.email
-            this.firstname = e.firstname
-            this.lastname = e.lastname
-            this.othernames = e.othernames
-            this.address = e.address
-            this.city = e.city
-            this.country = e.country
-            this.contact = e.contact
-            console.log(e)
-        });
-    }
+  created(){
+
+  }
 }
 </script>
 <style scoped>

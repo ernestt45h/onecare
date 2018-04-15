@@ -2,7 +2,7 @@
     <div id="login" class="agile-signup">
         <error></error>
         <loader></loader>
-        <div class="content2">
+        <div class="content2 card">
             <div class="grids-heading gallery-heading signup-heading">
                 <img id="logo-icon"  src="./assets/img/logo.png"/>
                 <h3 class="text-success">Login</h3>
@@ -10,7 +10,7 @@
             <template v-if="!next">
                 <form action="/login" method="post">
                     <input v-model="username" autofocus type="text" @keypress.enter.prevent="switchToPassword" class="text-center" name="Username" placeholder="ID number or Username">
-                    <button type="button" @click.prevent="switchToPassword" class="register btn red waves-effect white-text">Next</button>
+                    <button type="button" @click.prevent="switchToPassword" class="register btn btn-raised btn-success waves-effect white-text">Next</button>
 
                 </form>
                 <div class="signin-text">
@@ -24,7 +24,7 @@
                 <form action="/login" method="post">
                     <h3 class="text-success text-bold">{{ username }}</h3>
                     <input v-model="password" autofocus type="password" @keypress.enter.prevent="loginUser" class="text-center" name="Username" placeholder="Password or pin">
-                    <button type="button" @click.prevent="loginUser" class="register btn red waves-effect white-text">Login</button>
+                    <button type="button" @click.prevent="loginUser" class="register btn btn-raised btn-success waves-effect white-text">Login</button>
                 </form>
                 <div class="signin-text">
                         <button class="btn btn-sm btn-primary pull-left" @click="next = !next">Back</button>

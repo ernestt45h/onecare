@@ -18,6 +18,8 @@
 <script>
     import  Crud  from "./crud";
     import {host} from '../../config/host'
+    import axios from 'axios'
+    import {bus} from '../main'
 
     export default {
         name: 'report',
@@ -33,11 +35,11 @@
         },
         created(){
                 let user = this.$store.getters.user
-                console.log(host.logged+'/reports')
-                this.$http.get(host.logged+'/reports')
+                console.log(host.name+'/reports')
+                axios.get(host.name+'/reports')
                   .then(data => {
                     if (data.status == 200) {
-                      data = data.body
+                      data = data.data
                       if (!data.error) {
                         this.reports = data
                         this.originalReports = data

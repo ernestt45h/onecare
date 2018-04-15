@@ -41,8 +41,7 @@ const AppointmentSchema = Schema({
                     required:
                         [
                             true, "hospital phone number required"
-                        ],
-                    unique: true
+                        ]
                 },
             email:
                 {
