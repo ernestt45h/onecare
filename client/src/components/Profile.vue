@@ -13,19 +13,19 @@
                                         <div class="col-md-5">
                                             <div class="form-group">
                                                 <label>Hospital Registered At (disabled)</label>
-                                                <input type="text" class="form-control" disabled >
+                                                <input v-model="user.hospital.name" type="text" class="form-control" disabled >
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>Username (disabled)</label>
-                                                <input type="text" class="form-control" disabled placeholder="username">
+                                                <input v-model="user.username" type="text" class="form-control" disabled placeholder="username">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="exampleInputEmail1">Email address (disabled)</label>
-                                                <input type="email" class="form-control" disabled placeholder="email">
+                                                <input v-model="user.email" type="email" class="form-control" disabled placeholder="email">
                                             </div>
                                         </div>
                                     </div>
@@ -34,13 +34,13 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>First Name</label>
-                                                <input type="text" class="form-control" placeholder="firstname">
+                                                <input v-model="user.name.first" type="text" class="form-control" placeholder="firstname">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Last Name</label>
-                                                <input type="text" class="form-control" placeholder="lastname">
+                                                <input v-model="user.name.last" type="text" class="form-control" placeholder="lastname">
                                             </div>
                                         </div>
                                     </div>
@@ -123,15 +123,17 @@
                                 <div class="author">
                                      <a href="#">
                                     <img class="avatar border-gray" src="../assets/images/me.jpg" alt="..."/>
-                                      <h4 class="title">Ernest Hayford<br />
-                                         <small>quasar241</small>
+                                      <h4 class="title">
+                                          {{user.name.first | captilize}} {{user.name.last | captilize}}
+                                          <br />
+                                         <small>{{user.username}}</small>
                                       </h4>
                                     </a>
                                 </div>
                                 <p class="description text-center">
                                     <br>
-                                    <i class="fa fa-envelope"></i> : email
-                                    <i class="fa fa-phone"></i> : phone
+                                    <i v-if="user.email" class="fa fa-envelope">  {{user.email}}</i>
+                                    <i v-if="user.contact" class="fa fa-phone"></i> {{user.contact}}
                                 </p>
                             </div>
                             <hr>
@@ -174,8 +176,7 @@ export default {
   name: 'profile',
   data(){
       return{
-
-
+        user : this.$store.getters.getUserData.user
       }
   },
   created(){

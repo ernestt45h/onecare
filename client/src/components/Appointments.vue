@@ -15,9 +15,9 @@
                                 class="list-group-item"
                                 :key="e._id">
 
-                                    <h4 class="col-sm-6"> {{ e.description | uppercase}}</h4>
+                                    <h4 class="col s6"> {{ e.description | uppercase}}</h4>
                                     <br>
-                                    <h6 class="col-sm-6">With Dr.
+                                    <h6 class="col s6">With Dr.
                                         {{
                                         e.doctor.name.first + ' ' +
                                         e.doctor.name.last

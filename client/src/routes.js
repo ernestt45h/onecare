@@ -11,9 +11,10 @@ import PatientReport from './components/patient-report.vue'
 import Appointments from './components/appointments.vue'
 import Hospitals from './components/hospitals.vue'
 import Settings from './components/Settings.vue'
+import Prescrption from './components/Prescription.vue'
+import Lua from './components/Lua.vue'
 
 export default [
-
     {
         path:'/',
         component: App,
@@ -25,8 +26,9 @@ export default [
             {path: 'patient', component: PatientReport, name: 'patient-reports' },
             {path:'hospital', component: Hospitals, name:'hospitals'},
             {path:'appointment', component:Appointments, name:'appointments'},
-            {path:'settings', component:Settings, name:'settings'}
-
+            {path:'settings', component:Settings, name:'settings'},
+            {path:'prescrption', component:Prescrption, name:'prescrption'},
+            {path:'diagnose', component:Lua, name:'diagnose'},
         ]
     },
     {

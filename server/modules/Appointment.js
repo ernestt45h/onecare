@@ -2,7 +2,7 @@ var route = require('express').Router()
 var config = require('../config/config')
 var authToken = require('../middleware/authToken')
 const Appointment = require('../models/AppointmentsModule')
-const Permission =
+
 
 route.get('/', authToken, (req, res)=>{
     let date = new Date();
@@ -11,7 +11,7 @@ route.get('/', authToken, (req, res)=>{
         case "patient":
                 Appointment
                     .where('status', 'active')
-                    .where('date.start').gt(new Date().toLocaleString())
+                    .where('date.start').gt(new Date().toLocaleDateString())
                     .find({ "patient._id" : req.user._id },(err, doc)=>{
                     res.json(doc)
                 })

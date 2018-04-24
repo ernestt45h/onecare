@@ -13,6 +13,7 @@
           </transition>
         </div>
       </div>
+      <ebutton></ebutton>
       <footer></footer>
     </section>
     </div>
@@ -29,6 +30,7 @@
     import Loader from './components/Loader.vue'
     import Hospitals from "./components/hospitals"
     import Error from "./components/errors"
+    import Ebutton from './components/includes/EmergencyButton'
 
 
     import {bus} from './main'
@@ -43,7 +45,8 @@ export default {
       Footer,
       Loader,
       Hospitals,
-      Error
+      Error,
+      Ebutton,
   },
   data(){
     return{

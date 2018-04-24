@@ -20,7 +20,7 @@
                 <router-link :to="'/'+link.target">
                     <i :class="link.icon" class="nav_icon"></i>
                     <span class="nav-text text-capitalize">
-					{{ link.target }}
+					{{ link.description }}
 					</span>
                 </router-link>
             </li>

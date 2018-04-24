@@ -30,7 +30,7 @@
         border: 5px solid #fff;
         width: 50px;
         height: 50px;
-        position: absolute;
+        position: fixed;
         right: 25px;
         bottom: 25px;
         border-radius: 100%;

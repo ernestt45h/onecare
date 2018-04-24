@@ -1,0 +1,22 @@
+{
+  "name": "OneCare",
+  "short_name": "OneCare",
+  "background_color": "#f4f7f9",
+  "dir": "ltr",
+  "lang": "en",
+  "display": "fullscreen",
+  "icons": [
+    {
+      "src": "http://localhost/public/logo.png",
+      "sizes": "48x48"
+    },
+    {
+      "src": "http://localhost/public/logo.png",
+      "sizes": "72x72 96x96 114x114 128x128 256x256"
+    }
+  ],
+  "orientation": "any",
+  "scope": "http://localhost:8080",
+  "theme_color": "#92d050",
+  "start_url": "http://localhost:8080"
+}

@@ -25,6 +25,7 @@ app.use(cors())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
+app.use('/public', express.static(__dirname + '/public'));
 
 //Set up routes to Api module
 var Api = require('./modules/Api')

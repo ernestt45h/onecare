@@ -90,12 +90,14 @@ const store = new Vuex.Store({
         },
 
         initUserData:({commit, getters})=>{
+            bus.$emit('loading',true);
             let user = getters.user;
             console.log("user inserted");
             axios.get(host.name + '/user').then(function (params) {
               if (params.status === 200) {
                 commit('updateUserData',params.body);
                 bus.$emit('userData')
+                bus.$emit('loading',false);
               }
             })
         },
@@ -132,6 +134,7 @@ const store = new Vuex.Store({
         },
 
         logout:({commit})=>{
+            bus.$emit('loading',true);
             commit('setUser', {
                 uid: "",
                 token: ""
@@ -140,6 +143,7 @@ const store = new Vuex.Store({
             localStorage.removeItem('uid');
             localStorage.removeItem('token');
             bus.$emit('user')
+            bus.$emit('loading',false);
         }
     }
 });

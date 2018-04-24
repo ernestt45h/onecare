@@ -16,7 +16,11 @@ var PermissionSchema = mongoose.Schema({
     },
     target: {
         type: String,
-        enum: ['patient', 'super_admin', 'admin', 'doctor', 'nurse', 'pharmacist', 'laboratorist', 'accountant', 'hospital'],
+        enum: [
+            'patient', 'super_admin', 'admin', 'doctor', 'nurse',
+            'pharmacist', 'laboratorist', 'accountant', 'hospital',
+            'prescrption'
+        ],
         default: 'patient'
     },
     description: {
