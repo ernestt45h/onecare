@@ -14,7 +14,6 @@ route.get('/',  authToken, (req, res)=>{
                 throw err
             }else{
                 res.json(doc)
-                console.log(req.user)
             }
         })
 })
@@ -34,7 +33,6 @@ route.post('/', authToken, (req, res)=>{
         res.sendStatus(403)
     }else{
         var body = req.body
-        console.log(body)
         var permission = new Permission({ 
             target: body.target,
             role: body.role,

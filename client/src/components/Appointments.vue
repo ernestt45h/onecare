@@ -8,12 +8,13 @@
                         <h1 class="text-light">Appointments</h1>
                     </div>
                     <div>
-                        <ul class="list-group">
-                            <div
-                                v-if="events"
-                                v-for="e in events"
-                                class="list-group-item"
-                                :key="e._id">
+                        <keep-alive>
+                            <ul class="list-group">
+                                <div
+                                        v-if="events"
+                                        v-for="e in events"
+                                        class="list-group-item"
+                                        :key="e._id">
 
                                     <h4 class="col s6"> {{ e.description | uppercase}}</h4>
                                     <br>
@@ -30,13 +31,14 @@
                                             class="btn align btn-danger btn-sm"
                                             data-toggle="modal"
                                             data-target="#cancelAppointment">
-                                                <i class="fa fa-times"></i> cancel appointment
+                                        <i class="fa fa-times"></i> cancel appointment
                                     </button>
-                            </div>
-                            <div v-else>
-                                <h3 class="text-info text-center">You currnetly have no appointments</h3>
-                            </div>
-                        </ul>
+                                </div>
+                                <div v-else>
+                                    <h3 class="text-info text-center">You currnetly have no appointments</h3>
+                                </div>
+                            </ul>
+                        </keep-alive>
                     </div>
                     <div class="card-footer">
                         <h6 class="pull-right"><button class="btn btn-success"><i class="fa fa-plus"></i></button></h6>

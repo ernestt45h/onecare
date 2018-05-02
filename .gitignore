@@ -35,7 +35,9 @@ client/node_modules/
 client/jspm_packages/
 server/node_modules/
 server/jspm_packages/
-
+client/config/keys.js
+server/.gitignore
+node_modules/
 
 # Typescript v1 declaration files
 typings/

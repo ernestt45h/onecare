@@ -18,12 +18,18 @@ import {bus} from '../main'
         name:'error',
         data(){
             return{
-                err: ''
+                err: '',
+                timeout: Number
             }
         },
         created(){
             bus.$on('error', (error)=>{
                 this.err = error
+                this.timeout = 10
+                setTimeout(()=>{
+                    this.err =''
+                }, 10000)
+                
             })
         }
     }

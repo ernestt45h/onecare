@@ -9,7 +9,9 @@
         <error></error>
         <div v-if="userData" class="main-grid col-12">
           <transition name="fade" mode="out-in">
-            <router-view></router-view>
+            <keep-alive>
+              <router-view></router-view>
+            </keep-alive>
           </transition>
         </div>
       </div>

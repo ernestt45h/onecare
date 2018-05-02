@@ -19,8 +19,8 @@ let screenfull = require('../src/assets/js/screenfull');
 let iview = require('iview');
 import 'font-awesome/css/font-awesome.css'
 import 'iview/dist/styles/iview.css'
-import './assets/css/bootstrap-material-design.min.css'
 import '../src/assets/css/style.css'
+import './assets/css/bootstrap-material-design.min.css'
 
 
 Vue.use(Router);

@@ -6,7 +6,6 @@ const Appointment = require('../models/AppointmentsModule')
 
 route.get('/', authToken, (req, res)=>{
     let date = new Date();
-    console.log(date)
     switch(req.user.role){
         case "patient":
                 Appointment
